@@ -6,6 +6,7 @@ import Item from "../Item/Item";
 import {
   defaultControls,
   flashUser,
+  tellepills,
   generateRandomCoordinates,
   triggerMode,
   reversedControls,
@@ -24,6 +25,7 @@ const Board = () => {
     [0, 0],
     [10, 0],
   ]);
+  const [headRotation, setHeadRotation] = useState(0);
 
   const [trapArray, setTrapArray] = useState([]);
   const [foodArray, setFoodArray] = useState([]);
@@ -89,31 +91,37 @@ const Board = () => {
   const moveSnake = () => {
     let newSnakeData = [...snakeData];
     let head = newSnakeData[newSnakeData.length - 1];
+    let newHeadRotation = headRotation;
 
     // console.log(head);
-
     switch (direction.current) {
       case "RIGHT":
         head = [head[0] + 10, head[1]];
+        newHeadRotation  = 0;
 
         break;
       case "LEFT":
         head = [head[0] - 10, head[1]];
+        newHeadRotation  = 180;
 
         break;
       case "DOWN":
         head = [head[0], head[1] + 10];
+        newHeadRotation  = 90;
 
         break;
       case "UP":
         head = [head[0], head[1] - 10];
+        newHeadRotation  = -90;
 
       default:
         break;
     }
-
     newSnakeData.push(head);
     newSnakeData.shift();
+
+    setHeadRotation(newHeadRotation);
+    // console.log(newHeadRotation);
 
     const snakeCollapsed = hasCollapsed(head);
     const outOfBorder = isOutOfBorder(head);
@@ -133,7 +141,7 @@ const Board = () => {
     } else {
       if (snakeAteTrap === true) {
         // trap execution logic
-        const effects = [flashUser, triggerMode, wizz, netherPortal];
+        const effects = [ triggerMode];
 
         const selectedEffect =
           effects[Math.floor(Math.random() * effects.length)];
@@ -230,18 +238,24 @@ const Board = () => {
       });
     }
 
-    if (timer.current > (mode.includes("impossible") ? 0.02 : speed)) {
+    if (timer.current > (mode.includes("speedup") ? speed - 0.07 : speed)) {
       timer.current = 0;
       moveSnake();
       canChangeDirection.current = true;
+      console.log(speed)
     }
+
+    // if (timer.current > (mode.includes("speedown"))? speed + 0.07 : speed) {
+    //   setSpeed(prevSpeed => prevSpeed + 0.07); // Slow down (increase the time between movements)
+    //   console.log(speed)
+    // }
   };
 
   const replay = () => {
     // replay game
 
     removeMode("corner");
-    removeMode("impossible");
+    removeMode("speedup");
     removeMode("reversed");
 
     const video = document.getElementById("die-video");
@@ -310,7 +324,7 @@ const Board = () => {
       {gameOver && <Scoreboard />}
 
       <div id="board" className={s.board}>
-        <Snake data={snakeData} />
+        <Snake data={snakeData} rotation={headRotation} />
 
         <span className={s.score}>Score: {score}</span>
 

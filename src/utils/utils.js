@@ -3,6 +3,11 @@ import gsap from "gsap";
 import useStore from "./store";
 
 const flashbangAudio = new Audio("/audio/csgo-flashbang.mp3");
+const tellepillsAudio = new Audio("/audio/tellepills.mp3");
+const paralysisAudio = new Audio("/audio/paralysis.mp3");
+const speedupAudio = new Audio("/audio/speed_up.mp3");
+const speedownAudio = new Audio("/audio/speed_down.mp3");
+
 
 let flashTween = null;
 
@@ -30,12 +35,29 @@ export const flashUser = () => {
   });
 };
 
+export const paralysis = () => {
+
+  tellepillsAudio.currentTime = 0;
+  tellepillsAudio.play();
+};
+
 export const triggerMode = () => {
-  const modes = ["impossible", "corner", "reversed"];
+  const modes = ["speedup", "speedown"];
   const selectedMode = modes[Math.floor(Math.random() * modes.length)];
 
   // déclenche le mode sélectionné aléatoirement
   useStore.getState().addMode(selectedMode);
+  if (selectedMode === "speedup") {
+    speedupAudio.play();
+  }
+
+  if (selectedMode === "speedown") {
+    speedownAudio.play();
+  }
+
+  if (selectedMode === "paralysis") {
+    paralysisAudio.play();
+  }
 
   setTimeout(() => {
     useStore.getState().removeMode(selectedMode);

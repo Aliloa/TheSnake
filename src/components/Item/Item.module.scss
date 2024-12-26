@@ -3,12 +3,13 @@
   height: 10px;
   position: absolute;
   border: solid 1px white;
+  background-repeat: none;
 
-  &_trap {
-    background-color: blue;
-  }
+  // &_trap {
+  //   background-image: blue;
+  // }
 
-  &_food {
-    background-color: red;
-  }
+  // &_food {
+  //   background-color: red;
+  // }
 }
