@@ -43,6 +43,9 @@ const Board = () => {
   const direction = useRef("RIGHT");
   const canChangeDirection = useRef(true);
 
+  let stop = false;
+  let diharreaStyle = false;
+
   const gameIsOver = () => {
     gsap.ticker.remove(gameLoop);
 
@@ -89,6 +92,7 @@ const Board = () => {
   };
 
   const moveSnake = () => {
+    if (!stop){
     let newSnakeData = [...snakeData];
     let head = newSnakeData[newSnakeData.length - 1];
     let newHeadRotation = headRotation;
@@ -161,6 +165,7 @@ const Board = () => {
       }
       setSnakeData(newSnakeData);
     }
+  }
   };
 
   const hasCollapsed = (head) => {
@@ -191,6 +196,11 @@ const Board = () => {
       ? reversedControls(e, direction)
       : defaultControls(e, direction);
   };
+
+  mode.includes("diharrea")
+  ? diharreaStyle =  true 
+  : diharreaStyle =  false;
+
 
   const addItem = ({ getter, setter }) => {
     // génération de coordonnées
@@ -237,18 +247,31 @@ const Board = () => {
         setter: setTrapArray,
       });
     }
-
-    if (timer.current > (mode.includes("speedup") ? speed - 0.07 : speed)) {
+    
+    if (mode.includes("speedup") && timer.current > speed - 0.08) {
       timer.current = 0;
       moveSnake();
       canChangeDirection.current = true;
-      console.log(speed)
+    }
+    
+    if (mode.includes("paralysis") && timer.current > speed * 20) {
+      timer.current = 0;
+      moveSnake();
+      canChangeDirection.current = true;
     }
 
-    // if (timer.current > (mode.includes("speedown"))? speed + 0.07 : speed) {
-    //   setSpeed(prevSpeed => prevSpeed + 0.07); // Slow down (increase the time between movements)
-    //   console.log(speed)
-    // }
+    if (mode.includes("speedown") && timer.current > speed * 3) {
+      timer.current = 0;
+      moveSnake();
+      canChangeDirection.current = true;
+    }
+    
+    // Cas par défaut
+    if (!mode.includes("speedup") && !mode.includes("paralysis") &&!mode.includes("speedown") && timer.current > speed) {
+      timer.current = 0;
+      moveSnake();
+      canChangeDirection.current = true;
+    }    
   };
 
   const replay = () => {
@@ -311,6 +334,11 @@ const Board = () => {
   //   }
   // };
 
+  const style = {
+    backgroundImage: "url('background.png')",
+    backgroundSize: "cover",
+  };
+
   return (
     <>
       {gameOver && <GameOver replay={replay} />}
@@ -323,7 +351,7 @@ const Board = () => {
       )}
       {gameOver && <Scoreboard />}
 
-      <div id="board" className={s.board}>
+      <div id="board" className={s.board} style={style}>
         <Snake data={snakeData} rotation={headRotation} />
 
         <span className={s.score}>Score: {score}</span>
@@ -331,11 +359,11 @@ const Board = () => {
         <span className={s.death}>Death: {death}</span>
 
         {foodArray.map((coordinates) => (
-          <Item key={coordinates.id} coordinates={coordinates} type="food" />
+          <Item key={coordinates.id} coordinates={coordinates} type="food" mode = {diharreaStyle}  />
         ))}
 
         {trapArray.map((coordinates) => (
-          <Item key={coordinates.id} coordinates={coordinates} type="trap" />
+          <Item key={coordinates.id} coordinates={coordinates} type="trap" mode = {diharreaStyle}  />
         ))}
       </div>
     </>

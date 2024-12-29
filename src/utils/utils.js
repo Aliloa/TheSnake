@@ -7,6 +7,7 @@ const tellepillsAudio = new Audio("/audio/tellepills.mp3");
 const paralysisAudio = new Audio("/audio/paralysis.mp3");
 const speedupAudio = new Audio("/audio/speed_up.mp3");
 const speedownAudio = new Audio("/audio/speed_down.mp3");
+const diharreaAudio = new Audio("/audio/explosive_diharrea.mp3");
 
 
 let flashTween = null;
@@ -42,7 +43,7 @@ export const paralysis = () => {
 };
 
 export const triggerMode = () => {
-  const modes = ["speedup", "speedown"];
+  const modes = ['speedup', 'paralysis', 'diharrea', 'speedown'];
   const selectedMode = modes[Math.floor(Math.random() * modes.length)];
 
   // déclenche le mode sélectionné aléatoirement
@@ -57,6 +58,10 @@ export const triggerMode = () => {
 
   if (selectedMode === "paralysis") {
     paralysisAudio.play();
+  }
+
+  if (selectedMode === "diharrea") {
+    diharreaAudio.play();
   }
 
   setTimeout(() => {
