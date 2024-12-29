@@ -54,8 +54,12 @@ const Board = () => {
     const video = document.getElementById("die-video");
     video.style.display = "block";
 
-    video.currentTime = 0;
-    video.play();
+    // video.currentTime = 0;
+    // video.play();
+
+    const deathAudio = new Audio("/audio/death.mp3");
+    deathAudio.load();
+    deathAudio.play();
 
     setGameOver(true);
   };
@@ -283,7 +287,7 @@ const Board = () => {
 
     const video = document.getElementById("die-video");
     video.style.display = "none";
-    video.pause();
+    // video.pause();
 
     //reset game over
     setGameOver(false);

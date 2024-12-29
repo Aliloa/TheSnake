@@ -12,7 +12,7 @@ const Snake = ({ data, rotation }) => {
     if (data[data.length - 1] === dot) {
       background = `url('/isaac_skin.png') 0 0`;
     } else {
-      background = `url('/isaac_skin.png') ${10 * i}px 10px`;
+      background = `url('/isaac_skin.png') ${15 * i}px 15px`;
     }
 
     const style = {

@@ -1,9 +1,9 @@
 .item {
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   position: absolute;
   // border: solid 1px white;
-  background-repeat: none;
+  background-size: contain;
 
   // &_trap {
   //   background-image: blue;

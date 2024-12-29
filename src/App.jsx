@@ -25,7 +25,8 @@ function App() {
 
   return (
     <div>
-      <video src="/you-died.mp4" id="die-video" className="die-video"></video>
+      {/* <video src="/you-died.mp4" id="die-video" className="die-video"></video> */}
+      <div style={{ backgroundImage: 'url(/gameoverbg.png)' }} id="die-video" className="die-video" />
       <video
         src="/nether.mp4"
         id="nether-video"

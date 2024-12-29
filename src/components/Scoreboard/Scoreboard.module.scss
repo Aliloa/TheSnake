@@ -1,9 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Doto:wght@100..900&display=swap');
+
 .scoreboard {
   position: absolute;
   z-index: 100;
-  left: 10%;
-  top: 15%;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
+  text-align: center;
+  overflow-y: auto;
+max-height: 250px;
+color: #372B2D;
+font-family: "DotGothic16", serif;
+font-weight: 400;
+font-style: normal;
+}
+
+.scoreboard::-webkit-scrollbar {
+  width: 8px; /* Vertical scrollbar width */
+}
+
+.scoreboard::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Track color */
+  border-radius: 10px;
+}
+
+.scoreboard::-webkit-scrollbar-thumb {
+  background-color: #b69fa3; /* Thumb color */
+  border-radius: 10px;
+}
+
+.scoreboard::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker thumb color on hover */
+}
+
+.scoreboard h1 {
+  margin: 0;
 }
 
 .header {

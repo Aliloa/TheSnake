@@ -1,12 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Doto:wght@100..900&display=swap');
+
 .btn {
   padding: 12px 24px;
   position: fixed;
-  top: 85%;
+  top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
-  border: solid 1px red;
+  border: solid 2px #372B2D;
   background-color: transparent;
-  color: red;
+  color: #372B2D;
   cursor: pointer;
+  font-family: "DotGothic16", serif;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 2px;
+  font-size: 1.3rem;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  font-size: 1.5rem;
 }
