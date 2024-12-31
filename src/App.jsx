@@ -4,6 +4,8 @@ import { useDropzone } from "react-dropzone";
 import useStore from "./utils/store";
 
 function App() {
+    document.title = 'The Bindings Of The Snake';
+
   const { skin, setSkin } = useStore();
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -42,10 +44,15 @@ function App() {
       </div>
 
       <div className="flashbang"></div>
+
+      <div className="speedup"><p>Speed UP</p></div>
+      <div className="speedown"><p>Speed DOWN</p></div>
+      <div className="paralysis"><p>Paralysis</p></div>
+      <div className="diharrea"><p>Explosive Diharrea</p></div>
+
       <Board />
       <div className="toggle-wrapper">
         <Toggle mode={"corner"} />
-        <Toggle mode={"impossible"} />
         <Toggle mode={"reversed"} />
       </div>
     </div>

@@ -10,7 +10,7 @@ const speedownAudio = new Audio("/audio/speed_down.mp3");
 const diharreaAudio = new Audio("/audio/explosive_diharrea.mp3");
 
 
-let flashTween = null;
+let animation = null;
 
 // window.location.href = "https://google.com";
 export const netherPortal = () => {
@@ -23,24 +23,40 @@ export const netherPortal = () => {
 };
 
 export const flashUser = () => {
-  if (flashTween) flashTween.kill();
+  if (animation) animation.kill();
 
   flashbangAudio.currentTime = 0;
   flashbangAudio.play();
   document.querySelector(".flashbang").style.opacity = "1";
 
-  flashTween = gsap.to(".flashbang", {
+  animation = gsap.to(".flashbang", {
     opacity: 0,
     duration: 2,
     delay: 0.25,
   });
 };
 
-export const paralysis = () => {
+function playModeAnimation(mode, audioElement) {
+  // if (animation) animation.kill();
+  
+  audioElement.play();
+  
+  const element = document.querySelector(`.${mode}`);
+  element.style.opacity = "1";
 
-  tellepillsAudio.currentTime = 0;
-  tellepillsAudio.play();
-};
+  animation = gsap.fromTo(
+    `.${mode}`,
+    {
+      x: "-5%",
+    },
+    {
+      x: "5%",
+      opacity: 0,
+      duration: 3,
+      ease: "power1.out",
+    }
+  );
+}
 
 export const triggerMode = () => {
   const modes = ['speedup', 'paralysis', 'diharrea', 'speedown'];
@@ -48,21 +64,22 @@ export const triggerMode = () => {
 
   // déclenche le mode sélectionné aléatoirement
   useStore.getState().addMode(selectedMode);
-  if (selectedMode === "speedup") {
-    speedupAudio.play();
-  }
 
-  if (selectedMode === "speedown") {
-    speedownAudio.play();
-  }
+ if (selectedMode === "speedup") {
+  playModeAnimation("speedup", speedupAudio);
+}
 
-  if (selectedMode === "paralysis") {
-    paralysisAudio.play();
-  }
+if (selectedMode === "speedown") {
+  playModeAnimation("speedown", speedownAudio);
+}
 
-  if (selectedMode === "diharrea") {
-    diharreaAudio.play();
-  }
+if (selectedMode === "paralysis") {
+  playModeAnimation("paralysis", paralysisAudio);
+}
+
+if (selectedMode === "diharrea") {
+  playModeAnimation("diharrea", diharreaAudio);
+}
 
   setTimeout(() => {
     useStore.getState().removeMode(selectedMode);
